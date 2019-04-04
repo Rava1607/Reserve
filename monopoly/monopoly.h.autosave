@@ -1,0 +1,103 @@
+#ifndef MONOPOLY_H
+#define MONOPOLY_H
+
+#endif // MONOPOLY_H
+#include <string>
+
+class Player{
+public:
+
+    Player(){
+        curPos = 0;
+        inAcadem = false;
+        inAcademCounter = 0;
+        money = 1500;
+        numOfHostel = 0;
+        inGame = true;
+        BomonkaVisiting = 0;
+        
+    }
+    int get_bomonkaVisiting()
+    {
+        return bomonkaVisiting;
+    }
+    int add1_bomonkaVisiting()
+    {
+       bomonkaVisiting++;
+    }
+    int get_money(){
+        return money;
+    }
+    void GoToAcadem(){
+        inAcadem = true;
+        curPos=8;
+    }
+    bool evaluateAcadem(int dice1, int dice2){
+        if (dice1==dice2){
+            inAcadem = false;
+            Move(dice1+dice2)
+       }
+        else if (inAcademCounter < 3){
+       
+        inAcademCounter++;
+        }
+        else{
+            money+=50;
+            inAcadem = false;
+            Move(dice1+dice2);
+        }
+        else (money<0){
+            kickPlayer();
+        }
+       
+    }
+    void kickPlayer(){
+        inGame= false;
+    }
+
+private:
+    int money;          //денюжки
+    int curPos;         //Позиция
+    int bomonkaVisiting;         //Число посещений бомонки(на 3 раз - исключение(конец игры для игрока))
+    int numOfHostel;         //Число общежитий
+    bool inAcadem;            //В академе
+    int inAcademCounter;          //Дней в академе
+    bool inGame;            //В игре
+
+};
+
+class Space
+{
+public:
+    Space(string name, int SpaceType, int cost, int costPerHouse, int groupedWith, int numOfHouses, int owner, int rent[0], int rent[1], int rent[2], int rent[3], int rent[4], int rent[5])
+    {
+        this->name=name;
+        this->cost=cost;
+        for (int i = 0; i < 6; i++){
+            this->rent[i]=rent[i];
+        }
+        this->costPerHouse=costPerHouse;
+        this->groupedWith=groupedWith;
+        this->numOfHouses=numOfHouses;
+        this->owner=owner;
+        this->SpaceType=SpaceType;
+    }
+    int get_Owner()
+    {
+        return owner;
+    }
+    
+
+private:
+
+  string name;
+  int cost;
+  int rent[6];
+  int costPerHouse;
+  int groupedWith;
+  int numOfHouses;
+  int owner;
+  int SpaceType;
+
+};
+
