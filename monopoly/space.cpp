@@ -12,29 +12,7 @@ Space::Space(string name, int SpaceType, int cost, int costPerHouse, int grouped
     this->owner=owner;
     this->SpaceType=SpaceType;
 }
-int Space::get_Owner()
-{
-    return owner;
-}
+
 void Space::add1_house(){
     numOfHouses++;
-}
-int Space::get_costPerHouse(){
-    return costPerHouse;
-}
-
-int Space::get_owner(){
-    return owner;
-}
-
-int Space::get_SpaceType(){
-    return SpaceType;
-}
-
-int Space::get_numOfHouses(){
-    return numOfHouses;
-}
-
-int Space::get_groupedWith(){
-    return groupedWith;
 }

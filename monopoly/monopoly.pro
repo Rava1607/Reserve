@@ -6,8 +6,7 @@ CONFIG -= qt
 SOURCES += \
         main.cpp \
     board.cpp \
-    space.cpp \
-    Player.cpp
+    space.cpp
 
 HEADERS += \
     space.h \
