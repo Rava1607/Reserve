@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+enum SpaceType{_Property, _Hostel, _Bomonka, _IncomeTax, _Chance, _Go, _Academ, _Frezer, _GoToAcadem};
 
 class player{
 public:
@@ -17,32 +18,39 @@ public:
 
 };
 
-class Space
-{
+class Space{
 public:
-  Space(string name, int SpaceType, int cost, int costPerHouse, int groupedWith, int numOfHouses, int owner, int rent[0], int rent[1], int rent[2], int rent[3], int rent[4], int rent[5]);
-    {
-    this->name=name;
-    this->cost=cost;
-    for (int i = 0; i < 6; i++)
-    {
-        this->rent[i]=rent[i];
-    }
-    this->costPerHouse=costPerHouse;
-    this->groupedWith=groupedWith;
-    this->numOfHouses=numOfHouses;
-    this->owner=owner;
-    this->SpaceType=SpaceType;
-    }
-
-string name;
+    string name;
   int cost;
-  int rent[6];
+  int rent1;
+  int rent2;
+  int rent3;
+  int rent4;
+  int rent5;
+  int rent6;
   int costPerHouse;
   int groupedWith;
   int numOfHouses;
   int owner;
   int SpaceType;
+
+  Space(string name, int SpaceType, int cost, int costPerHouse, int groupedWith, int numOfHouses, int owner, int rent1, int rent2, int rent3, int rent4, int rent5, int rent6)
+    {
+    this->name=name;
+    this->cost=cost;
+    this->rent1=rent1;
+    this->rent2=rent2;
+    this->rent3=rent3;
+    this->rent4=rent4;
+    this->rent5=rent5;
+    this->rent6=rent6;
+    this-> costPerHouse = costPerHouse;
+    this->groupedWith = groupedWith;
+    this->numOfHouses=numOfHouses;
+    this->owner=owner;
+    this->SpaceType=SpaceType;
+    }
+
 
 };
 
@@ -109,7 +117,7 @@ int purchaseFunct ( int currentPlayer, int rent,int playerLocation, int playerBa
     }
 
 
-
+void outputTile (int location);
 
 int diceRoll()
 {
@@ -142,6 +150,7 @@ void purchaseProperty ( bool *isOwned, int *isOwnedBy, int *currentBalance, int 
     *currentBalance = ( *currentBalance - propertyCost );
     *housesOwned = ( *housesOwned + 1 );
 }
+
 void payRent ( int *currentPlayerBalance, int *ownerPlayerBalance, int rentCost )
 {
 	*currentPlayerBalance = ( *currentPlayerBalance - rentCost );
@@ -214,13 +223,13 @@ int main()
             for( int i = 1; ; i++ )
                 {
 
-                    player[i].playerHasLost = checkPlayerLoss(player[i].money, player[i].housesOwned);
+                    player[i].playerHasLost = checkPlayerLoss(player[i].money);
 
                     if ( player[i].playerHasLost == false && player[i].inAcadem == 0 ) // Checks if the player has lost and is to be skipped, and skips their turn.
                     {
                         cout << "*|---------------------------------------------------------------------------|*" << endl;
                         cout << "*| Current player's ID: " << player[i].playerID << endl;
-                        cout << "*| Current balance: " << player[i].currentBalance << endl;
+                        cout << "*| Current balance: " << player[i].money << endl;
                         cout << "*|---------------------------------------------------------------------------|*" << endl;
                         cout<<endl<<"Would you like to view your owned properties? (Y=Yes N=No)"<<endl;
 
@@ -240,9 +249,9 @@ int main()
 
                         }
 
-                        diceRoll_1 = diceRoll();
-                        diceRoll_2 =  diceRoll();
-                        diceValue = (diceRoll_1 + diceRoll_2);
+                        int diceRoll_1 = diceRoll();
+                        int diceRoll_2 =  diceRoll();
+                        int diceValue = (diceRoll_1 + diceRoll_2);
 
                         if( (player[i].curPos + diceValue) > 31 )
                         {
@@ -264,7 +273,7 @@ int main()
                             }
 
                             int purchaseFunctReturn = 0;
-                            purchaseFunctReturn = purchaseFunct ( player[i].playerID, player[i].curPos, player[i].money,board[ (player[i].curPos) ].owner, board[ (player[i].currentLocation) ].owner, board[ (player[i].curPos) ].cost);
+                            purchaseFunctReturn = purchaseFunct ( player[i].playerID, player[i].curPos, player[i].money, board[ (player[i].curPos) ].owner, board[ (player[i].curPos) ].owner, board[ (player[i].curPos) ].cost);
 
                             if ( purchaseFunctReturn == 1 )
                             {
@@ -277,6 +286,10 @@ int main()
                             }
 //проверка количества игроков, если остался 1, игра заканчивается
 
+}
+            }
+            }
+    }
 }
 void outputTile (int location)
 {
