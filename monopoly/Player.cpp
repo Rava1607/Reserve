@@ -85,21 +85,14 @@ void Player::buyHouse(int boardPos){
 
 
 
-void PayRent(int rent){
 
-}
-void Property(int curPos){
-
-}
 void Hostel(){
     if (board[Player.curPos].owner==
 }
 
 
 
-void IncomeTax(){
 
-}
 void Player::Chance(){
             int num = (rand() % 5);
 
