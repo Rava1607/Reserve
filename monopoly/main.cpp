@@ -1,7 +1,159 @@
 #include <iostream>
+<<<<<<< HEAD
 #include "Player.h"
 #include "space.h"
+=======
+>>>>>>> a2a124222a1f06f28fed90f58f5cd197686c32b1
 using namespace std;
+enum SpaceType{_Property, _Hostel, _Bomonka, _IncomeTax, _Chance, _Go, _Academ, _Frezer, _GoToAcadem};
+
+class player{
+public:
+
+int numberOfPlayers()
+{
+    int numOfPlayers = 0;
+    cout << "*|---------------------------------------------------------------------------|*" << endl;
+    cout << "*| How many players will be playing ( 2 - 6 )?                               |*" << endl;
+    cout << "*| >> " ;
+    cin >> numOfPlayers;
+    return numOfPlayers;
+}
+
+
+
+int purchaseFunct ( int currentPlayer, int rent,int playerLocation, int playerBalance, int owner, int cost,string propertyName, string playerName)
+{
+    if (owner == 0 )
+    {
+        cout << propertyName << " is owned by " << playerName << "!" << endl;
+        cout << endl;
+        cout << "Would you like to buy " << propertyName << " for " << cost << "?" << endl;
+        cout << "( 'y' for Yes and 'n' for No ) " << endl;
+
+        char buyConfirm;
+        cin >> buyConfirm;
+
+        if ( buyConfirm == 'y' || buyConfirm == 'Y')
+        {
+
+            if ( playerBalance >= cost )
+            {
+                cout << "Congratulations! You are now the proud owner of " << propertyName << "!" << endl;
+                return 1;
+            }
+
+            else if ( playerBalance < cost )
+            {
+                cout << "Oh no! You don't have enough funds to purchase that property!" << endl;
+
+                return 0;
+            }
+
+
+        }
+
+<<<<<<< HEAD
+        else if ( buyConfirm == 'n' || buyConfirm == 'N' )
+        {
+            return 0;
+        }
+    }
+
+
+        else if (owner != currentPlayer )
+        {
+            cout << endl;
+            cout << propertyName << " is owned by " << playerName << "!" << endl;
+            cout << "You must pay " << cost << " to " << playerName << "!" << endl;
+            cout << endl;
+            cout << rent << " was paid to " << playerName << "!" << endl;
+            return 2;
+        }
+    }
+
+
+void outputTile (int location);
+
+int diceRoll()
+{
+    int number = 0;
+    number = ( rand() % 12 / 2 ) + 1 ; 
+    
+    cout << endl << "You rolled a " << number;  
+    return number;
+}
+bool checkPlayerLoss(int currentPlayerBalance)
+{
+	bool playerHasLost;
+	
+    if ( currentPlayerBalance <= 0)
+	{
+		playerHasLost = true;
+	}
+	
+	else
+	{
+		playerHasLost = false;
+	}
+	
+	return playerHasLost;
+}
+void purchaseProperty ( bool *isOwned, int *isOwnedBy, int *currentBalance, int *housesOwned, int currentPlayerID, int propertyCost )
+{
+    *isOwned = 1;
+    *isOwnedBy = currentPlayerID;
+    *currentBalance = ( *currentBalance - propertyCost );
+    *housesOwned = ( *housesOwned + 1 );
+}
+
+=======
+    int playerID;
+    int money;          //денюжки
+    int curPos;         //Позиция
+    int bomonkaVisiting;         //Число посещений бомонки(на 3 раз - исключение(конец игры для игрока))
+    int numOfHostel;         //Число общежитий
+    bool inAcadem;            //В академе
+    int inAcademCounter;          //Дней в академе
+    bool playerHasLost;            //В игре
+
+};
+
+class Space{
+public:
+    string name;
+  int cost;
+  int rent1;
+  int rent2;
+  int rent3;
+  int rent4;
+  int rent5;
+  int rent6;
+  int costPerHouse;
+  int groupedWith;
+  int numOfHouses;
+  int owner;
+  int SpaceType;
+
+  Space(string name, int SpaceType, int cost, int costPerHouse, int groupedWith, int numOfHouses, int owner, int rent1, int rent2, int rent3, int rent4, int rent5, int rent6)
+    {
+    this->name=name;
+    this->cost=cost;
+    this->rent1=rent1;
+    this->rent2=rent2;
+    this->rent3=rent3;
+    this->rent4=rent4;
+    this->rent5=rent5;
+    this->rent6=rent6;
+    this-> costPerHouse = costPerHouse;
+    this->groupedWith = groupedWith;
+    this->numOfHouses=numOfHouses;
+    this->owner=owner;
+    this->SpaceType=SpaceType;
+    }
+
+
+};
 
 
 int numberOfPlayers()
@@ -100,6 +252,7 @@ void purchaseProperty ( bool *isOwned, int *isOwnedBy, int *currentBalance, int 
     *housesOwned = ( *housesOwned + 1 );
 }
 
+>>>>>>> a2a124222a1f06f28fed90f58f5cd197686c32b1
 void payRent ( int *currentPlayerBalance, int *ownerPlayerBalance, int rentCost )
 {
 	*currentPlayerBalance = ( *currentPlayerBalance - rentCost );
@@ -108,6 +261,7 @@ void payRent ( int *currentPlayerBalance, int *ownerPlayerBalance, int rentCost 
 
 int main()
 {
+<<<<<<< HEAD
     int rent1[]={0,0,0,0,0,0};
     int renthostel[]={25, 50, 100, 200, 0, 0};
     int rent2[]={2, 10, 30, 90, 160, 250};
@@ -162,6 +316,49 @@ int main()
             player[i].playerHasLost = true;
         }
 
+=======
+    const int LENGHT=32;
+    Space board[LENGHT];
+    board[0] = Space("GO", _Go, 0, 0, -1, 0,-1, 0, 0, 0, 0, 0, 0);
+    board[1] = Space("Club", _Property, 60, 50, 3, 0, -1, 2, 10, 30, 90, 160, 250);
+    board[2] = Space("Chance", _Chance, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0);
+    board[3] = Space("Admission office", _Property, 60, 50, 3, 0, -1, 2, 10, 30, 90, 160, 250);
+    board[4] = Space("Hostel sheremet'yevo", _Hostel, 200, 0, -1, 0, -1, 25, 50, 100, 200, 0, 0);
+    board[5] = Space("Dean's office", _Property, 100, 50, 7, 0, -1, 6, 30, 90, 270, 400, 550);
+    board[6] = Space("Chance", _Chance, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0);
+    board[7] = Space("Trade union community", _Property, 100, 50, 5, 0, -1, 6, 30, 90, 270, 400, 550);
+    board[8] = Space("Gap year (In Academ)", _Academ, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0);
+    board[9] = Space("Canteen", _Property, 140, 100, 11, 0, -1, 10, 50, 150, 450, 625, 750);
+    board[10] = Space("Bomonka", _Bomonka, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0);
+    board[11] = Space("Burger", _Property, 140, 100, 9, 0, -1, 10, 50, 150, 450, 625, 750);
+    board[12] = Space("Hostel 3", _Hostel, 200, 0, -1, 0, -1, 25, 50, 100, 200, 0, 0);
+    board[13] = Space("Mechanical engineering",_Property, 180, 100, 15, 0, -1, 14, 70, 200, 550, 750, 950);
+    board[14] = Space("Chance", _Chance, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0);
+    board[15] = Space("Machine tools", _Property, 180, 100, 13, 0, -1, 14, 70, 200, 550, 750, 950);
+    board[16] = Space("Frezer", _Frezer, 0, 0,  -1,  0, -1, 0, 0, 0, 0, 0, 0);
+    board[17] = Space("Philosophy", _Property, 220, 150, 19, 0, -1, 18, 90, 250, 700, 875, 1050);
+    board[18] = Space("Chance", _Chance, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0);
+    board[19] = Space("Foreign language", _Property, 220, 150, 17, 0, -1, 18, 90, 250, 700, 875, 1050);
+    board[20] = Space("Hostel 2", _Hostel, 200, 0, -1, 0, -1, 25, 50, 100, 200, 0, 0);
+    board[21] = Space("Financial", _Property, 260, 150, 22, 0, -1, 22, 110, 330, 800, 975, 1150);
+    board[22] = Space("Physics", _Property, 260, 150, 21, 0, -1, 22, 110, 330, 800, 975, 1150);
+    board[23] = Space("Bomonka", _Bomonka, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0);
+    board[24] = Space("Go to academ", _GoToAcadem, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0);
+    board[25] = Space("Applied mathematics", _Property, 300, 200, 26, 0, -1, 26, 130, 390, 900, 1100, 1275);
+    board[26] = Space("Engineering graphics", _Property, 300, 200, 25, 0, -1, 26, 130, 390, 900, 1100, 1275);
+    board[27] = Space("Repairs", _IncomeTax, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0);
+    board[28] = Space("Hostel 8", _Hostel, 200, 0, -1, 0, -1, 25, 50, 100, 200, 0, 0);
+    board[29] = Space("Information systems", _Property, 360, 200, 31, 0, -1, 35, 175, 500, 1100, 1300, 1500);
+    board[30] = Space("Chance", _Chance, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0);
+    board[31] = Space("Technologies", _Property, 360, 200, 29, 0, -1, 35, 175, 500, 1100, 1300, 1500);
+
+    player player[7];
+    for ( int i = 0; i <= 6; i++ )
+        {
+            player[i].playerID = i;
+    }
+
+>>>>>>> a2a124222a1f06f28fed90f58f5cd197686c32b1
     int numOfPlayers;
     numOfPlayers = numberOfPlayers();
     for ( int i = 0; i <= 6; i++ )
@@ -205,12 +402,21 @@ int main()
                                 if ( board[k].owner == i )
                                 {
                                     cout << " -- " << board[k].name[k] << endl;
+<<<<<<< HEAD
 
                                 }
                             }
 
                         }
 
+=======
+
+                                }
+                            }
+
+                        }
+
+>>>>>>> a2a124222a1f06f28fed90f58f5cd197686c32b1
                         int diceRoll_1 = diceRoll();
                         int diceRoll_2 =  diceRoll();
                         int diceValue = (diceRoll_1 + diceRoll_2);
