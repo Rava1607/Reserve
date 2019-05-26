@@ -16,7 +16,7 @@ int numberOfPlayers()
 
 
 
-int purchaseFunct (int actrent,int playerLocation, int playerBalance, int owner, int cost,string propertyName, string playerID,int cost)
+int purchaseFunct (int actrent,int playerLocation, int playerBalance, int owner, string propertyName, int playerID,int cost)
 {
     if (owner == 0 )
     {
@@ -54,7 +54,7 @@ int purchaseFunct (int actrent,int playerLocation, int playerBalance, int owner,
     }
 
 
-        else if ((owner != playerID) && (owner != -1))
+        else if ((owner != playerID) && (owner = -1))
         {
             cout << endl;
             cout << propertyName << " is owned by player" << playerID << "!" << endl;
@@ -154,8 +154,8 @@ int main()
     board[31] = Space("Technologies", _Property, 360, 200, 29, 0, -1, rent9),
     };
 
-    player player[7];
-    for ( int i = 0; i <= 6; i++ )
+    Player player[7];
+    for ( int i = 1; i <= 6; i++ )
         {
             player[i].playerID = i;
             player[i].playerHasLost = true;
@@ -171,19 +171,20 @@ int main()
             player[i].numOfHostel = 0;
             player[i].inAcadem = false;
             player[i].inAcademCounter = 0;
-            player[i].playerHasLost = false;
+            player[i].playerHasLost = true;
         }
      for ( int i = 1; i <= numOfPlayers; i++ )
         {
             player[i].money = 1500;
             player[i].curPos= 0;
+            player[i].playerHasLost = false;
         }
 
     for( ;; )
         {
             for( int i = 1; ; i++ )
                 {
-                for( int k = 0; k = 31; k++)
+                for( int k = 0; k == 31; k++)
                 {
                     if (board[k].numOfHouses == 1)
                     {

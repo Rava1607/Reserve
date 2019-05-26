@@ -4,7 +4,7 @@
 #endif // MONOPOLY_H
 #include <string>
 
-class player{
+class Player{
 public:
 
 
