@@ -4,7 +4,7 @@
 #endif // SPACE_H
 #include <string>
 
-enum SpaceType{_Property, _Hostel, _Bomonka, _IncomeTax, _Chance, _Go, _Academ, _Frezer, _GoToAcadem}; //не нужны мб
+enum SpaceType{_Property, _Hostel, _Bomonka, _Chance, _IncomeTax, _Go, _Academ, _Frezer, _GoToAcadem}; //не нужны мб
 
 class Space
 {
