@@ -11,6 +11,7 @@ class Space
 
 public:
     Space(std::string name, int SpaceType, int cost, int costPerHouse, int groupedWith, int numOfHouses, int owner, int rent[]);
+    void add1_house();
 
 
 
@@ -24,6 +25,7 @@ public:
   int numOfHouses;
   int owner;
   int rent[6];
+  int actrent;
 
 };
 
