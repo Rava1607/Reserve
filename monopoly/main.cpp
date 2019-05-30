@@ -1,7 +1,8 @@
-#include <iostream>
+ #include <iostream>
 #include "Player.h"
 #include "space.h"
 #include <time.h>
+#include <string>
 using namespace std;
 
 
@@ -17,11 +18,10 @@ int numberOfPlayers()
 
 
 
-int purchaseFunct (int actrent, int playerBalance, int owner, string propertyName, int playerID,int cost)
+int purchaseFunct (int actrent, int playerBalance, int owner, string propertyName,int cost)
 {
     if (owner == 0 )
     {
-        cout << propertyName << " is owned by player" << playerID << "!" << endl;
         cout << endl;
         cout << "Would you like to buy " << propertyName << " for " << cost << "?" << endl;
         cout << "( 'y' for Yes and 'n' for No ) " << endl;
@@ -52,16 +52,16 @@ int purchaseFunct (int actrent, int playerBalance, int owner, string propertyNam
         {
             return 0;
         }
-    }
+        }
 
 
-        else if ((owner != playerID))
+        else
         {
             cout << endl;
-            cout << propertyName << " is owned by player" << playerID << "!" << endl;
-            cout << "You must pay " << cost << " to player" << playerID << "!" << endl;
+            cout << propertyName << " is owned by player" << owner << "!" << endl;
+            cout << "You must pay " << actrent << " to player" << owner << "!" << endl;
             cout << endl;
-            cout << actrent << " was paid to player" << playerID << "!" << endl;
+            cout << actrent << " was paid to player" << owner << "!" << endl;
             return 2;
         }
     }
@@ -93,18 +93,23 @@ bool checkPlayerLoss(int currentPlayerBalance)
 	
 	return playerHasLost;
 }
-void purchaseProperty (int *isOwnedBy, int *currentBalance, int *housesOwned, int currentPlayerID, int propertyCost )
+/*void purchaseHostel (int *isOwnedBy, int *currentBalance, int *hostelsOwned, int currentPlayerID, int propertyCost )
 {
     *isOwnedBy = currentPlayerID;
     *currentBalance = ( *currentBalance - propertyCost );
-    *housesOwned = ( *housesOwned + 1 );
+    *hostelsOwned = ( *hostelsOwned + 1 );
+}
+void purchaseProperty (int *isOwnedBy, int *currentBalance, int currentPlayerID, int propertyCost )
+{
+    *isOwnedBy = currentPlayerID;
+    *currentBalance = ( *currentBalance - propertyCost );
 }
 
 void payRent ( int *currentPlayerBalance, int *ownerPlayerBalance, int rentCost )
 {
 	*currentPlayerBalance = ( *currentPlayerBalance - rentCost );
 	*ownerPlayerBalance = ( *ownerPlayerBalance + rentCost );
-}
+}*/
 
 int main()
 {
@@ -173,7 +178,6 @@ int main()
             player[i].numOfHostel = 0;
             player[i].inAcadem = false;
             player[i].inAcademCounter = 0;
-            player[i].playerHasLost = true;
         }
      for ( int i = 1; i <= numOfPlayers; i++ )
         {
@@ -184,32 +188,8 @@ int main()
 
     for( ;; )
         {
-            for( int i = 1; ; i++ )
-                {
-                for( int k = 0; k == 31; k++)
-                {
-                    if (board[k].numOfHouses == 1)
-                    {
-                        board[k].actrent = board[k].rent[1];
-                    }
-                    if (board[k].numOfHouses == 2)
-                    {
-                        board[k].actrent = board[k].rent[2];
-                    }
-                    if (board[k].numOfHouses == 3)
-                    {
-                        board[k].actrent = board[k].rent[3];
-                    }
-                    if (board[k].numOfHouses == 4)
-                    {
-                        board[k].actrent = board[k].rent[4];
-                    }
-                    if (board[k].numOfHouses == 5)
-                    {
-                        board[k].actrent = board[k].rent[5];
-                    }
-                }
-
+            for( int i = 1; i < 7 ; i++ )
+            {
                     player[i].playerHasLost = checkPlayerLoss(player[i].money);
 
                     if ( player[i].playerHasLost == false && player[i].inAcadem == 0 ) // Checks if the player has lost and is to be skipped, and skips their turn.
@@ -229,11 +209,71 @@ int main()
                             {
                                 if ( board[k].owner == i )
                                 {
-                                    cout << " -- " << board[k].name[k] << endl;
-
+                                    cout << " -- " << board[k].name << endl;
                                 }
                             }
 
+                        }
+
+                        for ( int k = 0; k <= 31; k++)
+                        {
+                            if ((board[k].owner == board [ ( board[k].groupedWith)].owner) && ((board[k].owner != 0) && (board[k].owner != -1)))
+                            {
+                                cout << "You can upgrade " << board[k].name << " or " << board [ (board [k].groupedWith)].name << endl;
+                                cout << "Do you want to upgrade something?" << endl;
+                                cout << "( 'y' for Yes and 'n' for No ) " << endl;
+
+                                char buyConfirm;
+                                cin >> buyConfirm;
+
+                                if (( buyConfirm == 'y' || buyConfirm == 'Y') && (board[k].costPerHouse < player[i].money))
+                                {
+                                    cout << board[k].name << " or " <<  board [ ( board[k].groupedWith)].name << "?" << endl;
+                                    cout << "( '1' for " << board[k].name << " and '2' for" << board [ ( board[k].groupedWith)].name << " )"  << endl;
+
+                                    char upboard;
+                                    cin >> upboard;
+
+                                    if (upboard == 1)
+                                    {
+                                        board[k].numOfHouses++;
+                                        player[i].money -= board[k].costPerHouse;
+                                        break;
+                                    }
+
+                                    if (upboard == 2)
+                                    {
+                                        board [ ( board[k].groupedWith)].numOfHouses++;
+                                        player[i].money -= board [ ( board[k].groupedWith)].costPerHouse;
+                                        break;
+                                    }
+
+                                }
+                             }
+                        }
+
+                        for( int k = 0; k <= 31; k++)
+                        {
+                            if (board[k].numOfHouses == 1)
+                            {
+                                board[k].actrent = board[k].rent[1];
+                            }
+                            if (board[k].numOfHouses == 2)
+                            {
+                                board[k].actrent = board[k].rent[2];
+                            }
+                            if (board[k].numOfHouses == 3)
+                            {
+                                board[k].actrent = board[k].rent[3];
+                            }
+                            if (board[k].numOfHouses == 4)
+                            {
+                                board[k].actrent = board[k].rent[4];
+                            }
+                            if (board[k].numOfHouses == 5)
+                            {
+                                board[k].actrent = board[k].rent[5];
+                            }
                         }
 
                         int diceRoll_1 = diceRoll();
@@ -255,16 +295,27 @@ int main()
 
 
                             int purchaseFunctReturn = 0;
-                            purchaseFunctReturn = purchaseFunct (board[(player[i].curPos)].actrent, player[i].money, board[ (player[i].curPos) ].owner, board[ (player[i].curPos) ].name, player[i].playerID, board[(player[i].curPos)].cost);
+                            purchaseFunctReturn = purchaseFunct (board[(player[i].curPos)].actrent, player[i].money, board[ (player[i].curPos) ].owner, board[ (player[i].curPos) ].name, board[(player[i].curPos)].cost);
 
-                            if ( purchaseFunctReturn == 1 )
+                            if ( (purchaseFunctReturn == 1) && (board[(player[i].curPos)].SpaceType == 1 ))
                             {
-                                purchaseProperty ( &board[ (player[i].curPos) ].owner, &player[i].money, &player[i].numOfHostel, player[i].playerID, board[ (player[i].curPos) ].actrent );
-                            }
+                                //purchaseHostel( &board[ (player[i].curPos) ].owner, &player[i].money, &player[i].numOfHostel, player[i].playerID, board[ (player[i].curPos) ].actrent );
+                                board[ (player[i].curPos) ].owner = player[i].playerID;
+                                player[i].money -= board[(player[i].curPos)].cost;
+                                player[i].numOfHostel++;
 
+                            }
+                            else if (purchaseFunctReturn == 1)
+                            {
+                                //purchaseProperty( &board[ (player[i].curPos) ].owner, &player[i].money, player[i].playerID, board[ (player[i].curPos) ].actrent );
+                                board[ (player[i].curPos) ].owner = player[i].playerID;
+                                player[i].money -= board[(player[i].curPos)].cost;
+                            }
                             else if ( purchaseFunctReturn == 2 )
                             {
-                                payRent( &player[i].money, &player[ board[ (player[i].curPos) ].owner ].money, board[ (player[i].curPos) ].actrent);
+                                //payRent( &player[i].money, &player[ (board[ (player[i].curPos) ].owner) ].money, board[ (player[i].curPos) ].actrent);
+                                player[ (board[ (player[i].curPos) ].owner) ].money += board[ (player[i].curPos) ].actrent;
+                                player[i].money -= board[ (player[i].curPos) ].actrent;
                             }
 
 
@@ -287,16 +338,27 @@ int main()
                         {
 
                             int purchaseFunctReturn = 0;
-                            purchaseFunctReturn = purchaseFunct (board[(player[i].curPos)].actrent,  player[i].money, board[ (player[i].curPos) ].owner, board[ (player[i].curPos) ].name, player[i].playerID, board[(player[i].curPos)].cost);
+                            purchaseFunctReturn = purchaseFunct (board[(player[i].curPos)].actrent,  player[i].money, board[ (player[i].curPos) ].owner, board[ (player[i].curPos) ].name, board[(player[i].curPos)].cost);
 
-                            if ( purchaseFunctReturn == 1 )
+                            if ( (purchaseFunctReturn == 1) && (board[(player[i].curPos)].SpaceType == 1 ))
                             {
-                                purchaseProperty ( &board[ (player[i].curPos) ].owner, &player[i].money, &player[i].numOfHostel, player[i].playerID, board[ (player[i].curPos) ].actrent );
+                                //purchaseHostel( &board[ (player[i].curPos) ].owner, &player[i].money, &player[i].numOfHostel, player[i].playerID, board[ (player[i].curPos) ].actrent );
+                                board[ (player[i].curPos) ].owner = player[i].playerID;
+                                player[i].money -= board[(player[i].curPos)].cost;
+                                player[i].numOfHostel++;
+                            }
+                            else if (purchaseFunctReturn == 1)
+                            {
+                                //purchaseProperty( &board[ (player[i].curPos) ].owner, &player[i].money, player[i].playerID, board[ (player[i].curPos) ].actrent );
+                                board[ (player[i].curPos) ].owner = player[i].playerID;
+                                player[i].money -= board[(player[i].curPos)].cost;
                             }
 
                             else if ( purchaseFunctReturn == 2 )
                             {
-                                payRent( &player[i].money, &player[ board[ (player[i].curPos) ].owner ].money, board[ (player[i].curPos) ].actrent);
+                                //payRent( &player[i].money, &player[ board[ (player[i].curPos) ].owner ].money, board[ (player[i].curPos) ].actrent);
+                                player[ (board[ (player[i].curPos) ].owner) ].money += board[ (player[i].curPos) ].actrent;
+                                player[i].money -= board[ (player[i].curPos) ].actrent;
                             }
 
                             else if ( player[i].inAcadem == 1 )
@@ -338,11 +400,11 @@ int main()
                                             break;
                                         case 3:
                                             player[i].money += 10;
-                                            cout << "You lost 10$" << endl;
+                                            cout << "You found 10$" << endl;
                                             break;
                                         case 4:
                                             player[i].money += 20;
-                                            cout << "Time to go grocery shopping, -20 $" << endl;
+                                            cout << "You made the right bet, +20 $" << endl;
                                             break;
                                     }
 
@@ -357,7 +419,7 @@ int main()
                                 if (player[i].bomonkaVisiting < 3)
                                 {
                                     player[i].bomonkaVisiting =+1;
-                                    cout << "You visited her " << player[i].bomonkaVisiting << "time" << endl;
+                                    cout << "You visited her " << player[i].bomonkaVisiting << " time" << endl;
                                 }
                                 else
                                 {

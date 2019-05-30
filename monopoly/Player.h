@@ -7,8 +7,6 @@
 class Player{
 public:
 
-
-
     int playerID;
     int money;          //денюжки
     int curPos;         //Позиция
